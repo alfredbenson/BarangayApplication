@@ -26,10 +26,10 @@ public class loginform extends javax.swing.JFrame {
 
     
     public static boolean loginAcc(String username, String password){
-        dbConnector connector = new dbConnector();
+        dbConnector dbc = new dbConnector();
         try{
             String query = "SELECT * FROM tbl_user  WHERE u_username = '" + username + "' AND u_password = '" + password + "'";
-            ResultSet resultSet = connector.getData(query);
+            ResultSet resultSet = dbc.getData(query);
             return resultSet.next();
         }catch (SQLException ex) {
             return false;
@@ -97,6 +97,11 @@ public class loginform extends javax.swing.JFrame {
         });
 
         jButton1.setText("Exit");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Login");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -173,11 +178,11 @@ public class loginform extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
         if(loginAcc(un.getText(),pass.getText())){
-            JOptionPane.showMessageDialog(null,"Login Sucess");
-        adminDashboard ads = new adminDashboard ();
+        JOptionPane.showMessageDialog(null,"Login Sucess");
+       adminDashboard ads = new adminDashboard();
         ads.setVisible(true);
         this.dispose();
-            
+       
         }else{
        JOptionPane.showMessageDialog(null,"Login Failed");  
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -185,6 +190,10 @@ public class loginform extends javax.swing.JFrame {
     private void unActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_unActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_unActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
