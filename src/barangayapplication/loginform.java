@@ -10,6 +10,7 @@ import ipconfig.dbConnector;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import user.userDashboard;
 
 /**
  *
@@ -24,13 +25,21 @@ public class loginform extends javax.swing.JFrame {
         initComponents();
     }
 
-    
+    static String status;
+    static String type;
     public static boolean loginAcc(String username, String password){
         dbConnector dbc = new dbConnector();
         try{
             String query = "SELECT * FROM tbl_user  WHERE u_username = '" + username + "' AND u_password = '" + password + "'";
             ResultSet resultSet = dbc.getData(query);
-            return resultSet.next();
+            if(resultSet.next()){
+              status = resultSet.getString("u_status");
+              type = resultSet.getString("u_type"); 
+             return true;   
+            }else{
+                
+             return false; 
+            }
         }catch (SQLException ex) {
             return false;
         }
@@ -176,15 +185,27 @@ public class loginform extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-
-        if(loginAcc(un.getText(),pass.getText())){
-        JOptionPane.showMessageDialog(null,"Login Sucess");
-       adminDashboard ads = new adminDashboard();
-        ads.setVisible(true);
-        this.dispose();
        
+        
+        if(loginAcc(un.getText(),pass.getText())){
+        if(!status.equals("Active")){
+            JOptionPane.showMessageDialog(null,"In-Active Account,Contact the admin!");    
         }else{
-       JOptionPane.showMessageDialog(null,"Login Failed");  
+            JOptionPane.showMessageDialog(null,"LOGIN SUCCESS");
+            if(type.equals("Admin")){
+               adminDashboard ads = new adminDashboard();
+               ads.setVisible(true);
+               this.dispose();
+        }else if(type.equals("user")){
+               userDashboard usd = new userDashboard();
+               usd.setVisible(true);
+               this.dispose();
+        }else{
+                JOptionPane.showMessageDialog(null,"NO Account type found,Contact the admin!");    
+        }
+            }
+        }else{ 
+        JOptionPane.showMessageDialog(null," INVALID ACCOUNT");  
     }//GEN-LAST:event_jButton2ActionPerformed
     }
     private void unActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_unActionPerformed

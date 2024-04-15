@@ -118,7 +118,6 @@ public boolean duplicateCheck(){
 
         jLabel5.setText("Account Type");
 
-        ln.setText("test");
         ln.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 lnActionPerformed(evt);
